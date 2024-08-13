@@ -1,4 +1,4 @@
 package pl.jakubrostowski.githubapitask.dto;
 
-public class GithubRequestDto {
+public record GithubRequestDto(String username) {
 }
