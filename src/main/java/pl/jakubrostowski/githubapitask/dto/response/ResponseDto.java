@@ -1,4 +1,4 @@
-package pl.jakubrostowski.githubapitask.dto;
+package pl.jakubrostowski.githubapitask.dto.response;
 
 import lombok.Builder;
 import lombok.Value;
@@ -7,9 +7,9 @@ import java.util.List;
 
 @Value
 @Builder
-public class GithubResponseDto {
+public class ResponseDto {
 
     String repositoryName;
     String ownerLogin;
-    List<GithubBranchInfoDto> branchInfo;
+    List<BranchResponseDto> branchInfo;
 }

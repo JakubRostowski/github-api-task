@@ -21,5 +21,5 @@ public class RepositoryDto {
     boolean fork;
 
     @Setter
-    List<BranchDto> branch;
+    List<BranchDto> branches;
 }

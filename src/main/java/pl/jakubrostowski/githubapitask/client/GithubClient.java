@@ -19,7 +19,7 @@ public class GithubClient {
                 .build();
     }
 
-    public List<RepositoryDto> getRepositoryInfo(String username) {
+    public List<RepositoryDto> getRepositoryListByUser(String username) {
         RepositoryDto[] result = restClient
                 .get()
                 .uri("/users/" + username + "/repos")
@@ -27,7 +27,6 @@ public class GithubClient {
                 .body(RepositoryDto[].class);
 
         return Arrays.stream(result)
-                .filter(repo -> !repo.isFork())
                 .toList();
     }
 
