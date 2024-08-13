@@ -1,21 +1,19 @@
 package pl.jakubrostowski.githubapitask.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import pl.jakubrostowski.githubapitask.dto.GithubRequestDto;
+import org.springframework.web.bind.annotation.*;
 import pl.jakubrostowski.githubapitask.dto.GithubResponseDto;
 import pl.jakubrostowski.githubapitask.service.GithubService;
 
 @RestController
+@RequestMapping("/api/github")
 @RequiredArgsConstructor
 public class GithubController {
 
     private final GithubService githubService;
 
-    @GetMapping
-    public GithubResponseDto getUserRepositories(@RequestBody GithubRequestDto dto) {
-
+    @GetMapping(value="/user/{username}/repositories", headers="Accept=application/json")
+    public GithubResponseDto getUserRepositories(@PathVariable String username) {
+        return githubService.getRepositoriesForGivenUser(username);
     }
 }
