@@ -14,6 +14,6 @@ public class GithubController {
 
     @GetMapping(value="/user/{username}/repositories", headers="Accept=application/json")
     public GithubResponseDto getUserRepositories(@PathVariable String username) {
-        return githubService.getRepositoriesForGivenUser(username);
+        return githubService.getUserRepositories(username);
     }
 }
