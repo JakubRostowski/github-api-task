@@ -2,6 +2,7 @@ package pl.jakubrostowski.githubapitask.client;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import pl.jakubrostowski.githubapitask.dto.BranchDto;
 import pl.jakubrostowski.githubapitask.dto.RepositoryDto;
 
 import java.util.Arrays;
@@ -18,10 +19,26 @@ public class GithubClient {
                 .build();
     }
 
-    public List<RepositoryDto> getBasicRepositoryInfo(String username) {
-        RepositoryDto[] result = restClient.get().uri("/users/" + username + "/repos").retrieve().body(RepositoryDto[].class);
+    public List<RepositoryDto> getRepositoryInfo(String username) {
+        RepositoryDto[] result = restClient
+                .get()
+                .uri("/users/" + username + "/repos")
+                .retrieve()
+                .body(RepositoryDto[].class);
+
         return Arrays.stream(result)
                 .filter(repo -> !repo.isFork())
+                .toList();
+    }
+
+    public List<BranchDto> getBranchInfo(String ownerName, String repoName) {
+        BranchDto[] result = restClient
+                .get()
+                .uri("/repos/" + ownerName + "/" + repoName + "/branches")
+                .retrieve()
+                .body(BranchDto[].class);
+
+        return Arrays.stream(result)
                 .toList();
     }
 

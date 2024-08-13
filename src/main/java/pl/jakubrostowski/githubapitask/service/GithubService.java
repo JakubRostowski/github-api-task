@@ -15,7 +15,11 @@ public class GithubService {
     private final GithubClient githubClient;
 
     public GithubResponseDto getUserRepositories(String username) {
-        List<RepositoryDto> repositories =  githubClient.getBasicRepositoryInfo(username);
+        List<RepositoryDto> repositories =  githubClient.getRepositoryInfo(username);
+
+        for (RepositoryDto dto : repositories) {
+            githubClient.getBranchInfo(dto.getOwner().getLogin(), dto.getRepositoryName());
+        }
 
         return null;
     }
