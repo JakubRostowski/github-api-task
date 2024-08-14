@@ -19,9 +19,11 @@ public class GithubService {
     public List<ResponseDto> getUserRepositories(String username) {
         List<RepositoryDto> repositories =  githubClient.getRepositoryListByUser(username);
 
-        repositories.removeIf(RepositoryDto::isFork);
+        List<RepositoryDto> filteredRepositories = repositories.stream()
+                .filter(repo -> !repo.isFork())
+                .toList();
 
-        for (RepositoryDto dto : repositories) {
+        for (RepositoryDto dto : filteredRepositories) {
             List<BranchDto> branches = githubClient.getBranchInfo(dto.getOwner().getLogin(), dto.getRepositoryName());
             dto.setBranches(branches);
         }

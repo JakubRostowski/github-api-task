@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import pl.jakubrostowski.githubapitask.dto.BranchDto;
 import pl.jakubrostowski.githubapitask.dto.RepositoryDto;
+import pl.jakubrostowski.githubapitask.exception.RepositoryNotFoundException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,9 @@ public class GithubClient {
                 .get()
                 .uri("/users/" + username + "/repos")
                 .retrieve()
+                .onStatus(status -> status.value() == 404, (request, response) -> {
+                    throw new RepositoryNotFoundException();
+                })
                 .body(RepositoryDto[].class);
 
         return Arrays.stream(result)
