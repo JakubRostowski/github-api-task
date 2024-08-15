@@ -17,17 +17,17 @@ public class GithubService {
     private final GithubClient githubClient;
 
     public List<ResponseDto> getUserRepositories(String username) {
-        List<RepositoryDto> repositories = githubClient.getRepositoryListByUser(username)
+        List<RepositoryDto> repos = githubClient.getRepositoryListByUser(username)
                 .stream()
                 .filter(repo -> !repo.isFork())
                 .toList();
 
-        for (RepositoryDto dto : repositories) {
-            List<BranchDto> branches = githubClient.getBranchInfo(dto.getOwner().getLogin(), dto.getRepositoryName());
-            dto.setBranches(branches);
-        }
+        repos.forEach(repo -> {
+            List<BranchDto> branches = githubClient.getBranchInfo(repo.getOwner().getLogin(), repo.getRepositoryName());
+            repo.setBranches(branches);
+        });
 
-        return repositories.stream()
+        return repos.stream()
                 .map(GithubMapper::toResponseDto)
                 .toList();
     }
