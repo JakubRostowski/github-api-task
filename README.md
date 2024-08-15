@@ -1,4 +1,4 @@
-# FilmwebScraper
+# GitHub API task
 A simple client for downloading public, non-forked GitHub repositories for a given username.
 ## Setup, build and run
 * Clone repository and enter its directory:
