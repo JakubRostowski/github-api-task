@@ -17,6 +17,7 @@ import pl.jakubrostowski.githubapitask.exception.RepositoryNotFoundException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
@@ -70,8 +71,11 @@ class GithubClientTests {
     @Test
     void shouldThrowException() {
         serviceServer.expect(requestTo("https://api.github.com/users/non-existing-user/repos"))
-                .andRespond(withStatus(HttpStatus.NOT_FOUND).contentType(APPLICATION_JSON));
+                .andRespond(withStatus(NOT_FOUND).contentType(APPLICATION_JSON));
 
-        assertThrows(RepositoryNotFoundException.class, () -> githubClient.getRepositoryListByUser("non-existing-user"));
+        RepositoryNotFoundException ex = assertThrows(RepositoryNotFoundException.class, () ->
+                githubClient.getRepositoryListByUser("non-existing-user"));
+        assertEquals(NOT_FOUND.value(), ex.getStatusCode());
+        assertEquals("No repositories found for the given username.", ex.getMessage());
     }
 }
