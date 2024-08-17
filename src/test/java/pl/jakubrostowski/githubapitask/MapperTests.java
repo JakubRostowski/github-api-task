@@ -23,9 +23,9 @@ class MapperTests {
 
         ResponseDto responseDto = GithubMapper.toResponseDto(repositoryDto);
 
-        assertEquals("repo", responseDto.getRepositoryName());
-        assertEquals("login", responseDto.getOwnerLogin());
-        assertEquals("branch", responseDto.getBranchInfo().get(0).getBranchName());
-        assertEquals("sha", responseDto.getBranchInfo().get(0).getLastCommitSha());
+        assertEquals("repo", responseDto.repositoryName());
+        assertEquals("login", responseDto.ownerLogin());
+        assertEquals("branch", responseDto.branchInfo().get(0).branchName());
+        assertEquals("sha", responseDto.branchInfo().get(0).lastCommitSha());
     }
 }

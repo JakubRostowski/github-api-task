@@ -18,18 +18,9 @@ public final class GithubMapper {
         List<BranchResponseDto> branchInfo = new ArrayList<>();
 
         for (BranchDto branch : dto.getBranches()) {
-            branchInfo.add(
-                    BranchResponseDto.builder()
-                            .branchName(branch.getBranchName())
-                            .lastCommitSha(branch.getCommit().getSha())
-                            .build()
-            );
+            branchInfo.add(new BranchResponseDto(branch.getBranchName(), branch.getCommit().getSha()));
         }
 
-        return ResponseDto.builder()
-                .repositoryName(dto.getRepositoryName())
-                .ownerLogin(dto.getOwner().getLogin())
-                .branchInfo(branchInfo)
-                .build();
+        return new ResponseDto(dto.getRepositoryName(), dto.getOwner().getLogin(), branchInfo);
     }
 }

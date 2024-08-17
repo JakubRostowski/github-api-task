@@ -5,11 +5,5 @@ import lombok.Value;
 
 import java.util.List;
 
-@Value
-@Builder
-public class ResponseDto {
-
-    String repositoryName;
-    String ownerLogin;
-    List<BranchResponseDto> branchInfo;
+public record ResponseDto(String repositoryName, String ownerLogin, List<BranchResponseDto> branchInfo) {
 }
